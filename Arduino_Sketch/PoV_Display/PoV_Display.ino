@@ -168,6 +168,7 @@ int getLightBasicVoltage() {
   int tempVoltage = 0;
   for (int i = 0; i < iterations; i++) {
     tempVoltage += analogRead(lightDetectorPin);
+    delay(500);
   }
   return tempVoltage / iterations - difVoltage;
 }
