@@ -4,6 +4,8 @@ int pins[N] = { 12, 11, 10, 9, 8, 7, 6, 5};
 int pinForSensor = 13;
 int lightDetectorPin = A1;
 
+int lightBasicVoltage; 
+
 const int charHeight = 8;
 const int charWidth = 5;
 
@@ -129,10 +131,11 @@ void setup() {
   } else {
     outputString = defaultString;
   }
+  lightBasicVoltage = getLightBasicVoltage();
 }
 
 void loop() {
-  while (analogRead(lightDetectorPin) > 970) {
+  while (analogRead(lightDetectorPin) > lightBasicVoltage) {
   }
   for (int k = 0; k < outputString.length(); k++) {
     printLetter(outputString.charAt(k));
@@ -158,3 +161,15 @@ void printLetter(char ch)
   }
   delay(5);
 }
+
+int getLightBasicVoltage() {
+  int iterations = 10;
+  int difVoltage = 10;
+  int tempVoltage = 0;
+  for (int i = 0; i < iterations; i++) {
+    tempVoltage += analogRead(lightDetectorPin);
+  }
+  return tempVoltage / iterations - difVoltage;
+}
+
+
