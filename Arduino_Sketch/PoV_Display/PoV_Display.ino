@@ -135,8 +135,12 @@ void setup() {
 }
 
 void loop() {
-  while (analogRead(lightDetectorPin) > lightBasicVoltage) {
+  if (analogRead(lightDetectorPin) < lightBasicVoltage) {
+   printMessage(); 
   }
+}
+
+void printMessage() {
   for (int k = 0; k < outputString.length(); k++) {
     printLetter(outputString.charAt(k));
   }
@@ -164,7 +168,7 @@ void printLetter(char ch)
 
 int getLightBasicVoltage() {
   int iterations = 10;
-  int difVoltage = 10;
+  int difVoltage = 5;
   int tempVoltage = 0;
   for (int i = 0; i < iterations; i++) {
     tempVoltage += analogRead(lightDetectorPin);
